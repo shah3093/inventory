@@ -6,14 +6,12 @@
         <link rel="icon" type="image/png" href="../../assets/img/favicon.png">
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
         <title>
-
-            Material Dashboard PRO  by Creative Tim
-
+            Point of sale
         </title>
 
         <!--     Fonts and icons     -->
         <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons" />
-        <link rel="stylesheet" href="../maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css">
 
         <!-- CSS Files -->
         <link href="../assets/css/material-dashboard.min.css" rel="stylesheet" />
@@ -25,6 +23,32 @@
 
     <body class="off-canvas-sidebar">
 
+        <?php
+        $email = NULL;
+        $password = NULL;
+
+        $showemptyemail = NULL;
+        $showemptypass = NULL;
+
+        if (isset($_GET['email'])) {
+            if ($_GET['email'] == "emailIsNull") {
+                $showemptyemail = "Email can't be empty";
+            } else if ($_GET['email'] == "emailIsNotValid") {
+                $showemptyemail = "Email isn't valid";
+            } else if ($_GET['email'] == "emailOrPassNotMatched") {
+                $showemptyemail = "Email or password not matched";
+            } else {
+                $email = $_GET['email'];
+            }
+        }
+
+        if (isset($_GET['password'])) {
+            $password = $_GET['password'];
+            if ($password == "passwordIsNull") {
+                $showemptypass = "Password can't be empty";
+            }
+        }
+        ?>
 
 
         <div class="wrapper wrapper-full-page">
@@ -33,13 +57,24 @@
                 <!--   you can change the color of the filter page using: data-color="blue | purple | green | orange | red | rose " -->
                 <div class="container">
                     <div class="col-lg-4 col-md-6 col-sm-6 ml-auto mr-auto">
-                        <form class="form" method="" action="#">
+                        <form class="form" method="post" action="../controller/loginController.php">
                             <div class="card card-login card-hidden">
                                 <div class="card-header card-header-rose text-center">
                                     <h4 class="card-title">Login</h4>
 
                                 </div>
+                                <?php
+                                if ($showemptyemail != NULL || $showemptypass != NULL) {
+                                    ?>
+                                    <div class="alert alert-danger text-center" role="alert">
+                                        <?php echo $showemptyemail . "<br/>" . $showemptypass; ?>
+                                    </div>
+                                    <?php
+                                }
+                                ?>
+
                                 <div class="card-body ">
+
                                     <span class="bmd-form-group">
                                         <div class="input-group">
                                             <div class="input-group-prepend">
@@ -47,7 +82,7 @@
                                                     <i class="material-icons">email</i>
                                                 </span>
                                             </div>
-                                            <input type="email" class="form-control" placeholder="Email...">
+                                            <input type="email" value="<?php echo $email; ?>" name="email" class="form-control" placeholder="Email...">
                                         </div>
                                     </span>
                                     <span class="bmd-form-group">
@@ -57,12 +92,12 @@
                                                     <i class="material-icons">lock_outline</i>
                                                 </span>
                                             </div>
-                                            <input type="password" class="form-control" placeholder="Password...">
+                                            <input type="password" name="password" class="form-control" placeholder="Password...">
                                         </div>
                                     </span>
                                 </div>
                                 <div class="card-footer justify-content-center">
-                                    <a href="#pablo" class="btn btn-rose btn-link btn-lg">Lets Go</a>
+                                    <button type="submit"class="btn btn-rose btn-link btn-lg" >Lets Go</button>
                                 </div>
                             </div>
                         </form>
