@@ -3,9 +3,11 @@
 include_once "../config/config.php";
 include_once '../library/fromhelper.php';
 include_once '../database/database.php';
+include_once '../library/sessionHandler.php';
 
 $fromhlper = new Fromhelper();
 $database = new Database();
+$config = new Config();
 
 $email = NULL;
 $password = NULL;
@@ -48,7 +50,17 @@ if ($_POST) {
             'password' => md5($password)
         ]);
         if ($stmt->rowCount() > 0) {
-            echo "Alhamulillah";
+            while ($row = $stmt->fetch()) {
+                
+                $sessionInstance = Session::getInstance();
+                $sessionInstance->adminName = $row['name'];
+                $sessionInstance->adminEmail = $row['email'];
+                $sessionInstance->adminPhone = $row['phone'];
+                $url = $config::BASEURL . 'template/index.php';
+                
+                header("Location: $url");
+                die();
+            }
         } else {
             $data = array(
                 'email' => "emailOrPassNotMatched"
@@ -60,6 +72,7 @@ if ($_POST) {
     $config = new Config();
     $url = $config::BASEURL . 'template/login.php';
     header("Location: $url");
+    die();
 }
 
 function sendfeedback($data) {

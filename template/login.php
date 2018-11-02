@@ -1,3 +1,17 @@
+
+<?php
+include_once '../config/config.php';
+include_once '../library/sessionHandler.php';
+$config = new Config();
+
+$sessionInstance = Session::getInstance();
+if (isset($sessionInstance->adminName)) {
+    $url = $config::BASEURL . 'template/index.php';
+    header("Location: $url");
+    die();
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
     <head>
