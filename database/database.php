@@ -53,6 +53,28 @@ Class Database {
         }
     }
 
+    public function update($table, $datas, $id) {
+        $cleanData = "";
+        foreach ($datas as $key => $data) {
+            $tmpdata = trim($data);
+            $tmpdata = stripcslashes($tmpdata);
+            $tmpdata = htmlspecialchars($tmpdata);
+            if (next($datas)) {
+                $cleanData .= $key . "='" . $tmpdata . "',";
+            } else {
+                $cleanData .= $key . "='" . $tmpdata . "'";
+            }
+        }
+        $sql = "UPDATE " . $table . " SET " . $cleanData . "WHERE id=" . $id;
+        $stmt = $this->connection->prepare($sql);
+
+        if ($stmt->execute() > 0) {
+            return "DONE";
+        } else {
+            return "ERROR";
+        }
+    }
+
     public function clean_data($data) {
         $cleandata = "";
 

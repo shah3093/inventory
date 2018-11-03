@@ -13,16 +13,18 @@ $sessionInstance = Session::getInstance();
 Class CategoryController {
 
     public $viewFile;
-    public $javaScriptFile;
+    public $javaScriptFile = '../script/category.js';
 
     public function index() {
         $this->viewFile = "../template/category/index.php";
-        $this->javaScriptFile = '../script/category.js';
     }
 
     public function addCategory() {
         $this->viewFile = "../template/category/add.php";
-        $this->javaScriptFile = '../script/category.js';
+    }
+
+    public function editCategory() {
+        $this->viewFile = "../template/category/edit.php";
     }
 
 }
@@ -52,7 +54,24 @@ if ($_POST) {
                     'type' => 'index'
                 );
                 sendfeedback($data);
-            }else{
+            } else {
+                echo "Something wrong";
+            }
+        }
+    }elseif ($typeofform == "editForm") {
+        if (!$database->connect()) {
+            echo $database->errormsg;
+        } else {
+            $categoryID = $_POST['categoryID'];
+            $_POST['formdata']['updtae_date'] = date('Y-m-d H:i:s');
+            $formdata = $_POST['formdata'];
+            $stmt = $database->update("category", $formdata,$categoryID);
+            if ($stmt == "DONE") {
+                $data = array(
+                    'type' => 'index'
+                );
+                sendfeedback($data);
+            } else {
                 echo "Something wrong";
             }
         }

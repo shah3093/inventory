@@ -20,7 +20,7 @@ if (!$database->connect()) {
                             <h4 class="card-title">Categories</h4>
                         </div>
                         <div class="col-md-6">
-                            <a href="<?php echo $config::BASEURL."menus/category.php?type=addCategory"; ?>" class="btn btn-info float-right">
+                            <a href="<?php echo $config::BASEURL . "menus/category.php?type=addCategory"; ?>" class="btn btn-info float-right">
                                 <span class="btn-label">
                                     <i class="material-icons">add</i>
                                 </span>
@@ -59,11 +59,20 @@ if (!$database->connect()) {
                                                     <td><?php echo $result['name']; ?></td>
                                                     <td><?php echo $result['description']; ?></td>
                                                     <td class="text-right">
-                                                        <a href="#" class="btn btn-link btn-warning btn-just-icon edit">
-                                                            <i class="material-icons">dvr</i>
+                                                        <?php
+                                                        $passData = array(
+                                                            'id' => $result['id'],
+                                                            'type' => 'editCategory'
+                                                        );
+                                                        $passData = http_build_query($passData);
+                                                        ?>
+                                                        <a
+                                                            href="<?php echo $config::BASEURL . "menus/category.php?" . $passData; ?>"
+                                                            class="btn btn-link btn-warning btn-just-icon edit">
+                                                            <i class="material-icons">edit</i>
                                                         </a>
                                                         <a href="#" class="btn btn-link btn-danger btn-just-icon remove">
-                                                            <i class="material-icons">close</i>
+                                                            <i class="material-icons">delete</i>
                                                         </a>
                                                     </td>
                                                 </tr>
