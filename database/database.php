@@ -39,4 +39,36 @@ Class Database {
         }
     }
 
+    public function insert($table, $data) {
+        $keys = implode(', ', array_keys($data));
+//        $values = "'" . implode("','", array_values($data)) . "'";
+        $values = $this->clean_data(array_values($data));
+        $sql = "INSERT INTO " . $table . "(" . $keys . ")" . "VALUES (" . $values . ")";
+        $stmt = $this->connection->prepare($sql);
+
+        if ($stmt->execute() > 0) {
+            return "DONE";
+        } else {
+            return "ERROR";
+        }
+    }
+
+    public function clean_data($data) {
+        $cleandata = "";
+
+        $arraySize = sizeof($data);
+        for ($i = 0; $i < $arraySize; $i++) {
+            $tmpdata = trim($data[$i]);
+            $tmpdata = stripcslashes($tmpdata);
+            $tmpdata = htmlspecialchars($tmpdata);
+            if (($arraySize - 1) == $i) {
+                $cleandata .= "'" . $tmpdata . "'";
+            } else {
+                $cleandata .= "'" . $tmpdata . "',";
+            }
+        }
+
+        return $cleandata;
+    }
+
 }

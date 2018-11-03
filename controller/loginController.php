@@ -51,13 +51,13 @@ if ($_POST) {
         ]);
         if ($stmt->rowCount() > 0) {
             while ($row = $stmt->fetch()) {
-                
+
                 $sessionInstance = Session::getInstance();
                 $sessionInstance->adminName = $row['name'];
                 $sessionInstance->adminEmail = $row['email'];
                 $sessionInstance->adminPhone = $row['phone'];
-                $url = $config::BASEURL . 'template/index.php';
-                
+
+                $url = $config::BASEURL . 'menus/dashboard.php';
                 header("Location: $url");
                 die();
             }

@@ -1,15 +1,11 @@
 <?php
-include_once '../config/config.php';
-include_once '../library/sessionHandler.php';
-$config = new Config();
-$sessionInstance = Session::getInstance();
-
 if (!isset($sessionInstance->adminName)) {
     $url = $config::BASEURL . 'template/login.php';
     header("Location: $url");
     die();
 }
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -31,9 +27,10 @@ if (!isset($sessionInstance->adminName)) {
         <!-- CSS Just for demo purpose, don't include it in your project -->
         <link href="../assets/demo/demo.css" rel="stylesheet" />
 
+        <link href="../assets/css/customize.css" rel="stylesheet" />
         <script src="../assets/js/core/jquery.min.js" type="text/javascript"></script>
         <script>
-            var baseurl = <?php echo $config::BASEURL; ?>
+            var baseurl = "<?php echo $config::BASEURL; ?>";
         </script>
     </head>
 
@@ -41,13 +38,13 @@ if (!isset($sessionInstance->adminName)) {
 
         <div class="wrapper ">
 
-            <?php include_once './layouts/sidebarmenu.php'; ?>
+            <?php include_once '../template/layouts/sidebarmenu.php'; ?>
 
 
             <div class="main-panel">
                 <!-- Navbar -->
 
-                <?php include_once './layouts/navbar.php'; ?>
+                <?php include_once '../template/layouts/navbar.php'; ?>
                 <!-- End Navbar -->
 
 
@@ -55,119 +52,28 @@ if (!isset($sessionInstance->adminName)) {
 
                 <div class="content">
                     <div class="container-fluid">
-                        <div class="header text-center ml-auto mr-auto">
-                            <h3 class="title">Material Dashboard Heading</h3>
-                            <p class="category">Created using Roboto Font Family</p>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="card">
-                                    <div class="card-body">
-                                        <div id="typography">
-                                            <div class="card-title">
-                                                <h2>Typography</h2>
-                                            </div>
-                                            <div class="row">
-                                                <div class="tim-typo">
-                                                    <h1>
-                                                        <span class="tim-note">Header 1</span>The Life of Material Dashboard </h1>
-                                                </div>
-                                                <div class="tim-typo">
-                                                    <h2>
-                                                        <span class="tim-note">Header 2</span>The Life of Material Dashboard</h2>
-                                                </div>
-                                                <div class="tim-typo">
-                                                    <h3>
-                                                        <span class="tim-note">Header 3</span>The Life of Material Dashboard</h3>
-                                                </div>
-                                                <div class="tim-typo">
-                                                    <h4>
-                                                        <span class="tim-note">Header 4</span>The Life of Material Dashboard</h4>
-                                                </div>
-                                                <div class="tim-typo">
-                                                    <h5>
-                                                        <span class="tim-note">Header 5</span>The Life of Material Dashboard</h5>
-                                                </div>
-                                                <div class="tim-typo">
-                                                    <h6>
-                                                        <span class="tim-note">Header 6</span>The Life of Material Dashboard</h6>
-                                                </div>
-                                                <div class="tim-typo">
-                                                    <p>
-                                                        <span class="tim-note">Paragraph</span>
-                                                        I will be the leader of a company that ends up being worth billions of dollars, because I got the answers. I understand culture. I am the nucleus. I think that’s a responsibility that I have, to push possibilities, to show people, this is the level that things could be at.</p>
-                                                </div>
-                                                <div class="tim-typo">
-                                                    <span class="tim-note">Quote</span>
-                                                    <blockquote class="blockquote">
-                                                        <p>
-                                                            I will be the leader of a company that ends up being worth billions of dollars, because I got the answers. I understand culture. I am the nucleus. I think that’s a responsibility that I have, to push possibilities, to show people, this is the level that things could be at.
-                                                        </p>
-                                                        <small>
-                                                            Kanye West, Musician
-                                                        </small>
-                                                    </blockquote>
-                                                </div>
-                                                <div class="tim-typo">
-                                                    <span class="tim-note">Muted Text</span>
-                                                    <p class="text-muted">
-                                                        I will be the leader of a company that ends up being worth billions of dollars, because I got the answers...
-                                                    </p>
-                                                </div>
-                                                <div class="tim-typo">
-                                                    <span class="tim-note">Primary Text</span>
-                                                    <p class="text-primary">
-                                                        I will be the leader of a company that ends up being worth billions of dollars, because I got the answers... </p>
-                                                </div>
-                                                <div class="tim-typo">
-                                                    <span class="tim-note">Info Text</span>
-                                                    <p class="text-info">
-                                                        I will be the leader of a company that ends up being worth billions of dollars, because I got the answers... </p>
-                                                </div>
-                                                <div class="tim-typo">
-                                                    <span class="tim-note">Success Text</span>
-                                                    <p class="text-success">
-                                                        I will be the leader of a company that ends up being worth billions of dollars, because I got the answers... </p>
-                                                </div>
-                                                <div class="tim-typo">
-                                                    <span class="tim-note">Warning Text</span>
-                                                    <p class="text-warning">
-                                                        I will be the leader of a company that ends up being worth billions of dollars, because I got the answers...
-                                                    </p>
-                                                </div>
-                                                <div class="tim-typo">
-                                                    <span class="tim-note">Danger Text</span>
-                                                    <p class="text-danger">
-                                                        I will be the leader of a company that ends up being worth billions of dollars, because I got the answers... </p>
-                                                </div>
-                                                <div class="tim-typo">
-                                                    <h2>
-                                                        <span class="tim-note">Small Tag</span>
-                                                        Header with small subtitle
-                                                        <br>
-                                                        <small>Use "small" tag for the headers</small>
-                                                    </h2>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        <?php include_once $viewFile; ?>
                     </div>
 
                 </div>
 
-                <?php include_once './layouts/footer.php'; ?>
+                <?php include_once '../template/layouts/footer.php'; ?>
 
 
             </div>
 
         </div>
 
-        <?php include_once './layouts/dashboardsettings.php'; ?>
+        <?php // include_once '../template/layouts/dashboardsettings.php'; ?>
 
-        <?php include_once './layouts/javaScriptsPlugin.php'; ?>
+        <?php include_once '../template/layouts/javaScriptsPlugin.php'; ?>
+
+        <script>
+<?php
+include_once '../script/mainScript.js';
+include_once $javaScriptFile;
+?>
+        </script>
 
     </body>
 
