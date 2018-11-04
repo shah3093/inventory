@@ -37,6 +37,14 @@ elseif ($type == "editCategory") {
     }
 }
 
+
+else if($type == "deleteCategory"){
+    $categoryID = $fromhlper->clean_data(isset($_GET['id']) ? $_GET['id'] : NULL);
+   if($categoryID != NULL){
+       deleteCategory($categoryID);
+   }
+}
+
 else {
     $url = $config::BASEURL . 'menus/dashboard.php';
     header("Location: $url");

@@ -75,6 +75,16 @@ Class Database {
         }
     }
 
+    public function delete($table, $id) {
+        $sql = "DELETE FROM " . $table . " WHERE id = " . $id;
+        $stmt = $this->connection->prepare($sql);
+        if ($stmt->execute() > 0) {
+            return "DONE";
+        } else {
+            return "ERROR";
+        }
+    }
+
     public function clean_data($data) {
         $cleandata = "";
 

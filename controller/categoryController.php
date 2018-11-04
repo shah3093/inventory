@@ -58,14 +58,14 @@ if ($_POST) {
                 echo "Something wrong";
             }
         }
-    }elseif ($typeofform == "editForm") {
+    } elseif ($typeofform == "editForm") {
         if (!$database->connect()) {
             echo $database->errormsg;
         } else {
             $categoryID = $_POST['categoryID'];
             $_POST['formdata']['updtae_date'] = date('Y-m-d H:i:s');
             $formdata = $_POST['formdata'];
-            $stmt = $database->update("category", $formdata,$categoryID);
+            $stmt = $database->update("category", $formdata, $categoryID);
             if ($stmt == "DONE") {
                 $data = array(
                     'type' => 'index'
@@ -74,6 +74,23 @@ if ($_POST) {
             } else {
                 echo "Something wrong";
             }
+        }
+    }
+}
+
+function deleteCategory($categoryID) {
+    $database = new Database();
+    if (!$database->connect()) {
+        echo $database->errormsg;
+    } else {
+        $stmt = $database->delete("category", $categoryID);
+        if ($stmt == "DONE") {
+            $data = array(
+                'type' => 'index'
+            );
+            sendfeedback($data);
+        } else {
+            echo "Something wrong";
         }
     }
 }

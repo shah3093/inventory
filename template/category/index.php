@@ -71,7 +71,16 @@ if (!$database->connect()) {
                                                             class="btn btn-link btn-warning btn-just-icon edit">
                                                             <i class="material-icons">edit</i>
                                                         </a>
-                                                        <a href="#" class="btn btn-link btn-danger btn-just-icon remove">
+                                                        <?php
+                                                        $passData = array(
+                                                            'id' => $result['id'],
+                                                            'type' => 'deleteCategory'
+                                                        );
+                                                        $passData = http_build_query($passData);
+                                                        ?>
+                                                        <a 
+                                                            data-href="<?php echo $config::BASEURL . "menus/category.php?" . $passData; ?>" 
+                                                            class="btn btn-link btn-danger btn-just-icon remove">
                                                             <i class="material-icons">delete</i>
                                                         </a>
                                                     </td>
