@@ -65,10 +65,17 @@
                     <p> Category </p>
                 </a>
             </li>
+            
+            <li class="nav-item ">
+                <a class="nav-link" href="<?php echo $config::BASEURL."menus/product.php"; ?>">
+                    <i class="material-icons">shopping_basket</i>
+                    <p> Product </p>
+                </a>
+            </li>
 
             <li class="nav-item  ">
                 <a class="nav-link" href="<?php echo $config::BASEURL."menus/logout.php"; ?>">
-                    <i class="material-icons">Log out</i>
+                    <i class="material-icons">lock</i>
                     <p> Logout </p>
                 </a>
             </li>

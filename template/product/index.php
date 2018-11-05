@@ -2,7 +2,7 @@
 if (!$database->connect()) {
     echo $database->errormsg;
 } else {
-    $stmt = $database->connection->prepare("SELECT * FROM category ORDER BY id DESC");
+    $stmt = $database->connection->prepare("SELECT * FROM product");
     $stmt->execute();
     $results = $stmt->fetchAll();
     ?>
@@ -21,11 +21,11 @@ if (!$database->connect()) {
                             <h4 class="card-title">Categories</h4>
                         </div>
                         <div class="col-md-6">
-                            <a href="<?php echo $config::BASEURL . "menus/category.php?type=addCategory"; ?>" class="btn btn-info float-right">
+                            <a href="<?php echo $config::BASEURL . "menus/product.php?type=addProduct"; ?>" class="btn btn-info float-right">
                                 <span class="btn-label">
                                     <i class="material-icons">add</i>
                                 </span>
-                                Add category
+                                Add product
                                 <div class="ripple-container"></div></a>
                         </div>
                     </div>
@@ -58,7 +58,7 @@ if (!$database->connect()) {
                                             <?php foreach ($results as $result): ?>
                                                 <tr role="row">
                                                     <td><?php echo $result['name']; ?></td>
-                                                    <td><?php echo $result['description']; ?></td>
+                                                    <td><?php echo $result['note']; ?></td>
                                                     <td class="text-right">
                                                         <?php
                                                         $passData = array(
