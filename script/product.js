@@ -1,13 +1,13 @@
 $(document).ready(function () {
 //Puchase information calculation
 
-    var purchase_price = 0;
-    var purchase_vat = 0;
-    var purchase_vat_persent = 0;
-    var purchase_others = 0;
-    var total_purchaseprice = 0;
-    var stock = 0;
-    var singleproductpurchaseprice = 0;
+    var purchase_price = getValueFromInput("#prchaseprice");
+    var purchase_vat = getValueFromInput("#prchasevat");
+    var purchase_vat_persent = getValueFromInput("#prchasevat");
+    var purchase_others = getValueFromInput("#prchaseother");
+    var total_purchaseprice = getValueFromInput("#prchasetotalprice");
+    var stock = getValueFromInput("#stock");
+    var singleproductpurchaseprice = getValueFromInput("#singleproductprchaseprice");
 
     $("#prchaseprice").on("blur", function () {
         var data = $("#prchaseprice").val();
@@ -129,12 +129,12 @@ $(document).ready(function () {
 
 //Wholesale information calculation
 
-    var wholesaleprice = 0;
-    var wholesalepercentageofprofit = 0;
-    var wholesalevat = 0;
-    var wholesalevat_percentage = 0;
-    var wholesaleothers = 0;
-    var wholesaletotal = 0;
+    var wholesaleprice = getValueFromInput("#wholesaleprice");
+    var wholesalepercentageofprofit = getValueFromInput("#wholesalepercentageofprofit");
+    var wholesalevat = getValueFromInput("#wholesalevat");
+    var wholesalevat_percentage = getValueFromInput("#wholesalevat");
+    var wholesaleothers = getValueFromInput("#wholesaleothers");
+    var wholesaletotal = getValueFromInput("#wholesaletotal");
 
     $("#wholesaleprice").on("blur", function () {
         var singleproductprchaseprice = Number($("#singleproductprchaseprice").val());
@@ -266,12 +266,12 @@ $(document).ready(function () {
 
 
 
-    var retailsaleprice = 0;
-    var retialsalepercentageofprofit = 0;
-    var retailsalevat = 0;
-    var retailsalevat_percentage = 0;
-    var retailsaleothers = 0;
-    var retailsaletotal = 0;
+    var retailsaleprice = getValueFromInput("#retailsaleprice");
+    var retialsalepercentageofprofit = getValueFromInput("#retialsalepercentageofprofit");
+    var retailsalevat = getValueFromInput("#retailsalevat");
+    var retailsalevat_percentage = getValueFromInput("#retailsalevat_percentage");
+    var retailsaleothers = getValueFromInput("#retailsaleothers");
+    var retailsaletotal = getValueFromInput("#retailsaletotal");
 
     $("#retailsaleprice").on("blur", function () {
         var singleproductprchaseprice = Number($("#singleproductprchaseprice").val());
@@ -397,4 +397,36 @@ $(document).ready(function () {
     }
 
 //Retailesale information calculation
+
+
+    function getValueFromInput(inputid) {
+        var data = $(inputid).val();
+        if ($.isNumeric(data)) {
+            return Number(data);
+        } else {
+            return Number(0);
+        }
+    }
+
+    $(".remove").on("click", function () {
+        var url = $(this).attr("data-href");
+        swal({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+            if (result) {
+                swal(
+                        'Deleted!',
+                        'Your file has been deleted.',
+                        'success'
+                        )
+                window.location = url;
+            }
+        });
+    });
 });

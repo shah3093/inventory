@@ -23,15 +23,20 @@
                     <br/><br/>
                     <div class="form-group bmd-form-group">
                         <label for="pname" class="bmd-label-floating">Name *</label>
-                        <input type="text" name="formdata[name]" required class="form-control required" id="pname">
+                        <input type="text" value="<?php echo $product['name'] ?>" name="formdata[name]" required class="form-control required" id="pname">
                     </div>
 
-                    <input type="hidden" name="typeofform" value="addForm"/>
+                    <input type="hidden" name="typeofform" value="editForm"/>
+                     <input type="hidden" name="productid" value="<?php echo $product['id']; ?>"/>
 
 
                     <div class="fileinput text-center fileinput-new" data-provides="fileinput">
                         <div class="fileinput-new thumbnail" style="max-width: 150px !important;">
-                            <img src="../assets/img/image_placeholder.jpg" alt="...">
+                            <?php if ($product['image'] != NULL): ?>
+                                <img src="../assets/uploads/<?php echo $product['image']; ?>" alt="...">
+                            <?php else : ?>
+                                <img src="../assets/img/image_placeholder.jpg" alt="...">
+                            <?php endif; ?>
                         </div>
                         <div class="fileinput-preview fileinput-exists thumbnail" style=""></div>
                         <div>
@@ -41,7 +46,13 @@
                                 <input type="hidden" value="" >
                                 <input type="file" name="productimg">
                                 <div class="ripple-container"></div></span>
-                            <a href="#pablo" class="btn btn-danger btn-round fileinput-exists" data-dismiss="fileinput"><i class="fa fa-times"></i> Remove<div class="ripple-container"><div class="ripple-decorator ripple-on ripple-out" style="left: 88.4px; top: 36.7px; background-color: rgb(255, 255, 255); transform: scale(15.5063);"></div><div class="ripple-decorator ripple-on ripple-out" style="left: 88.4px; top: 36.7px; background-color: rgb(255, 255, 255); transform: scale(15.5063);"></div></div></a>
+                            <a href="#pablo" class="btn btn-danger btn-round fileinput-exists" data-dismiss="fileinput">
+                                <i class="fa fa-times"></i> Remove
+                                <div class="ripple-container">
+                                    <div class="ripple-decorator ripple-on ripple-out" style="left: 88.4px; top: 36.7px; background-color: rgb(255, 255, 255); transform: scale(15.5063);"></div>
+                                    <div class="ripple-decorator ripple-on ripple-out" style="left: 88.4px; top: 36.7px; background-color: rgb(255, 255, 255); transform: scale(15.5063);"></div>
+                                </div>
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -60,44 +71,47 @@
                     </div>
                     <div class="form-group bmd-form-group">
                         <label for="prchaseprice" class="bmd-label-floating"> Price *</label>
-                        <input type="text" name="formdata[purchase_price]" required class="form-control required" id="prchaseprice">
+                        <input value="<?php echo $product['purchase_price'] ?>" type="text" name="formdata[purchase_price]" required class="form-control required" id="prchaseprice">
                     </div>
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group bmd-form-group">
                                 <label for="prchasevat" class="bmd-label-floating"> vat </label>
-                                <input type="text" name="formdata[purchase_vat]"  class="form-control" id="prchasevat">
+                                <input value="<?php echo $product['purchase_vat'] ?>" type="text" name="formdata[purchase_vat]"  class="form-control" id="prchasevat">
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group bmd-form-group">
                                 <label for="prchaseother" class="bmd-label-floating">Others</label>
-                                <input type="text" name="formdata[purchase_others]"  class="form-control" id="prchaseother">
+                                <input value="<?php echo $product['purchase_others'] ?>" type="text" name="formdata[purchase_others]"  class="form-control" id="prchaseother">
                             </div>
                         </div>
                     </div>
                     <div class="form-group bmd-form-group">
                         <label for="prchasetotalprice" class="bmd-label-floating">Total price *</label>
-                        <input type="text" name="formdata[total_purchaseprice]" required class="form-control required" id="prchasetotalprice">
+                        <input type="text" value="<?php echo $product['total_purchaseprice']; ?>" name="formdata[total_purchaseprice]" required class="form-control required" id="prchasetotalprice">
                     </div>
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group bmd-form-group">
                                 <label for="stock" class="bmd-label-floating"> Stock *</label>
-                                <input type="text" name="formdata[stock]" required class="form-control required" id="stock">
+                                <input type="text" value="<?php echo $product['stock']; ?>" name="formdata[stock]" required class="form-control required" id="stock">
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group bmd-form-group">
                                 <label for="measurementunit" class="bmd-label-floating">Measurement unit</label>
-                                <input type="text" name="formdata[measurementunit]"  class="form-control" id="measurementunit">
+                                <input type="text" value="<?php echo $product['measurementunit'] ?>" name="formdata[measurementunit]"  class="form-control" id="measurementunit">
                             </div>
                         </div>
                     </div>
                     <br/>
                     <div class="form-group bmd-form-group">
+                        <?php 
+                        $singleproduct = $product['total_purchaseprice'] / $product['stock'];
+                        ?>
                         <label for="singleproductprchaseprice" class="bmd-label-floating">Single product purchase price</label>
-                        <input type="text" readonly  required class="form-control" id="singleproductprchaseprice">
+                        <input value="<?php echo $singleproduct; ?>" type="text" readonly  required class="form-control" id="singleproductprchaseprice">
                     </div>
                 </div>
             </div>
@@ -115,13 +129,13 @@
                         <div class="col-md-6">
                             <div class="form-group bmd-form-group">
                                 <label for="wholesaleprice" class="bmd-label-floating"> Price </label>
-                                <input type="text" name="formdata[wholesaleprice]"  class="form-control" id="wholesaleprice">
+                                <input value="<?php echo $product['wholesaleprice']; ?>" type="text" name="formdata[wholesaleprice]"  class="form-control" id="wholesaleprice">
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group bmd-form-group">
                                 <label for="wholesalepercentageofprofit" class="bmd-label-floating">Profit percentage </label>
-                                <input type="text" name="formdata[wholesalepercentageofprofit]"  class="form-control" id="wholesalepercentageofprofit">
+                                <input type="text" value="<?php echo $product['wholesalepercentageofprofit']; ?>" name="formdata[wholesalepercentageofprofit]"  class="form-control" id="wholesalepercentageofprofit">
                             </div>
                         </div>
                     </div>
@@ -129,19 +143,19 @@
                         <div class="col-md-6">
                             <div class="form-group bmd-form-group">
                                 <label for="wholesalevat" class="bmd-label-floating"> Vat </label>
-                                <input type="text" name="formdata[wholesalevat]"  class="form-control" id="wholesalevat">
+                                <input value="<?php echo $product['wholesalevat']; ?>" type="text" name="formdata[wholesalevat]"  class="form-control" id="wholesalevat">
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group bmd-form-group">
                                 <label for="wholesaleothers" class="bmd-label-floating">Others</label>
-                                <input type="text" name="formdata[wholesaleothers]"  class="form-control" id="wholesaleothers">
+                                <input value="<?php echo $product['wholesaleothers']; ?>" type="text" name="formdata[wholesaleothers]"  class="form-control" id="wholesaleothers">
                             </div>
                         </div>
                     </div>
                     <div class="form-group bmd-form-group">
                         <label for="wholesaletotal" class="bmd-label-floating">Total price</label>
-                        <input type="text" name="formdata[wholesaletotal]"  class="form-control" id="wholesaletotal">
+                        <input type="text" name="formdata[wholesaletotal]" value="<?php echo $product['wholesaletotal']; ?>"  class="form-control" id="wholesaletotal">
                     </div>
                 </div>
             </div>
@@ -156,13 +170,13 @@
                         <div class="col-md-6">
                             <div class="form-group bmd-form-group">
                                 <label for="retailsaleprice" class="bmd-label-floating"> Price </label>
-                                <input type="text" name="formdata[retailsaleprice]"  class="form-control" id="retailsaleprice">
+                                <input value="<?php echo $product['retailsaleprice']; ?>" type="text" name="formdata[retailsaleprice]"  class="form-control" id="retailsaleprice">
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group bmd-form-group">
                                 <label for="retialsalepercentageofprofit" class="bmd-label-floating">Profit percentage </label>
-                                <input type="text" name="formdata[retialsalepercentageofprofit]"  class="form-control" id="retialsalepercentageofprofit">
+                                <input value="<?php echo $product['retialsalepercentageofprofit']; ?>" type="text" name="formdata[retialsalepercentageofprofit]"  class="form-control" id="retialsalepercentageofprofit">
                             </div>
                         </div>
                     </div>
@@ -170,19 +184,19 @@
                         <div class="col-md-6">
                             <div class="form-group bmd-form-group">
                                 <label for="retailsalevat" class="bmd-label-floating"> Vat </label>
-                                <input type="text" name="formdata[retailsalevat]"  class="form-control" id="retailsalevat">
+                                <input value="<?php echo $product['retailsalevat']; ?>" type="text" name="formdata[retailsalevat]"  class="form-control" id="retailsalevat">
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group bmd-form-group">
                                 <label for="retailsaleothers" class="bmd-label-floating">Others</label>
-                                <input type="text" name="formdata[retailsaleothers]"  class="form-control" id="retailsaleothers">
+                                <input value="<?php echo $product['retailsaleothers']; ?>" type="text" name="formdata[retailsaleothers]"  class="form-control" id="retailsaleothers">
                             </div>
                         </div>
                     </div>
                     <div class="form-group bmd-form-group">
                         <label for="retailsaletotal" class="bmd-label-floating">Total price</label>
-                        <input type="text" name="formdata[retailsaletotal]"  class="form-control" id="retailsaletotal">
+                        <input value="<?php echo $product['retailsaletotal']; ?>" type="text" name="formdata[retailsaletotal]"  class="form-control" id="retailsaletotal">
                     </div>
                 </div>
             </div>
@@ -197,7 +211,7 @@
                 </div>
                 <div class="card-body ">
                     <div class="form-group bmd-form-group">
-                        <textarea name="formdata[note]"  class="form-control" id="description"></textarea>
+                        <textarea name="formdata[note]"  class="form-control" id="description"><?php echo $product['note']; ?></textarea>
                     </div>
 
                 </div>

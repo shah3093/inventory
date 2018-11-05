@@ -23,6 +23,10 @@ Class ProductController {
         $this->viewFile = "../template/product/add.php";
     }
 
+    public function editProduct() {
+        $this->viewFile = "../template/product/edit.php";
+    }
+
 }
 
 function categories() {
@@ -32,6 +36,20 @@ function categories() {
     $stmt->execute();
     $categories = $stmt->fetchAll();
     return $categories;
+}
+
+function productInfo($productID) {
+    $database = new Database();
+    if (!$database->connect()) {
+        echo $database->errormsg;
+        exit();
+    } else {
+        $stmt = $database->connection->prepare("SELECT * FROM product WHERE id =:id ");
+        $stmt->execute([
+            'id' => $productID
+        ]);
+        return $stmt->fetch();
+    }
 }
 
 if ($_POST) {
@@ -55,8 +73,30 @@ if ($_POST) {
                 echo "Something wrong";
             }
         }
-    } else {
-        
+    } else if ($typeofform == "editForm") {
+        if (!$database->connect()) {
+            echo $database->errormsg;
+        } else {
+            $productID = $_POST['productid'];
+            $_POST['formdata']['updtae_date'] = date('Y-m-d H:i:s');
+            $img = $_FILES['productimg']['name'];
+            if ($img != null) {
+                deleteimg($productID);
+                $imagename = imageupload($_FILES['productimg']['name']);
+                $_POST['formdata']['image'] = $imagename;
+            }
+
+            $formdata = $_POST['formdata'];
+            $stmt = $database->update("product", $formdata, $productID);
+            if ($stmt == "DONE") {
+                $data = array(
+                    'type' => 'index'
+                );
+                sendfeedback($data);
+            } else {
+                echo "Something wrong";
+            }
+        }
     }
 }
 
@@ -86,5 +126,35 @@ function imageupload($imagename) {
         }
     } else {
         return NULL;
+    }
+}
+
+function deleteimg($productID) {
+    $product = productInfo($productID);
+    if ($product['image'] != NULL) {
+        $target = '../assets/uploads/' . $product['image'];
+        if (@unlink($target)) {
+            return;
+        } else {
+            echo "Image delete failed";
+        }
+    }
+}
+
+function deleteProduct($productID) {
+    $database = new Database();
+    if (!$database->connect()) {
+        echo $database->errormsg;
+    } else {
+        deleteimg($productID);
+        $stmt = $database->delete("product", $productID);
+        if ($stmt == "DONE") {
+            $data = array(
+                'type' => 'index'
+            );
+            sendfeedback($data);
+        } else {
+            echo "Something wrong";
+        }
     }
 }

@@ -63,24 +63,24 @@ if (!$database->connect()) {
                                                         <?php
                                                         $passData = array(
                                                             'id' => $result['id'],
-                                                            'type' => 'editCategory'
+                                                            'type' => 'editProduct'
                                                         );
                                                         $passData = http_build_query($passData);
                                                         ?>
                                                         <a
-                                                            href="<?php echo $config::BASEURL . "menus/category.php?" . $passData; ?>"
+                                                            href="<?php echo $config::BASEURL . "menus/product.php?" . $passData; ?>"
                                                             class="btn btn-link btn-warning btn-just-icon edit">
                                                             <i class="material-icons">edit</i>
                                                         </a>
                                                         <?php
                                                         $passData = array(
                                                             'id' => $result['id'],
-                                                            'type' => 'deleteCategory'
+                                                            'type' => 'deleteProduct'
                                                         );
                                                         $passData = http_build_query($passData);
                                                         ?>
                                                         <a 
-                                                            data-href="<?php echo $config::BASEURL . "menus/category.php?" . $passData; ?>" 
+                                                            data-href="<?php echo $config::BASEURL . "menus/product.php?" . $passData; ?>" 
                                                             class="btn btn-link btn-danger btn-just-icon remove">
                                                             <i class="material-icons">delete</i>
                                                         </a>

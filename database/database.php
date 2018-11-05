@@ -59,12 +59,9 @@ Class Database {
             $tmpdata = trim($data);
             $tmpdata = stripcslashes($tmpdata);
             $tmpdata = htmlspecialchars($tmpdata);
-            if (next($datas)) {
-                $cleanData .= $key . "='" . $tmpdata . "',";
-            } else {
-                $cleanData .= $key . "='" . $tmpdata . "'";
-            }
+            $cleanData .= $key . "='" . $tmpdata . "',";
         }
+        $cleanData =  rtrim($cleanData, ",");
         $sql = "UPDATE " . $table . " SET " . $cleanData . "WHERE id=" . $id;
         $stmt = $this->connection->prepare($sql);
 
