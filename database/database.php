@@ -47,7 +47,7 @@ Class Database {
         $stmt = $this->connection->prepare($sql);
 
         if ($stmt->execute() > 0) {
-            return "DONE";
+            return $this->connection->lastInsertId();
         } else {
             return "ERROR";
         }

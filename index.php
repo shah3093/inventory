@@ -6,7 +6,7 @@ $config = new Config();
 
 
 if (session_id() != "") {
-    $url = $config::BASEURL . 'template/index.php';
+    $url = $config::BASEURL . 'menus/dashboard.php';
     header("Location: $url");
     die();
 } else {

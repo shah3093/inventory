@@ -49,7 +49,7 @@ if ($_POST) {
             $_POST['formdata']['create_date'] = date('Y-m-d H:i:s');
             $formdata = $_POST['formdata'];
             $stmt = $database->insert("category", $formdata);
-            if ($stmt == "DONE") {
+            if ($stmt != "ERROR") {
                 $data = array(
                     'type' => 'index'
                 );

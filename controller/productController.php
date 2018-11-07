@@ -64,7 +64,7 @@ if ($_POST) {
             $_POST['formdata']['image'] = $imagename;
             $formdata = $_POST['formdata'];
             $stmt = $database->insert("product", $formdata);
-            if ($stmt == "DONE") {
+            if ($stmt != "ERROR") {
                 $data = array(
                     'type' => 'index'
                 );

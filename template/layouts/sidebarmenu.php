@@ -11,7 +11,8 @@
 
         <a href="#" class="simple-text logo-normal">
             Point of sale
-        </a></div>
+        </a>
+    </div>
 
     <div class="sidebar-wrapper">
 
@@ -52,29 +53,36 @@
         </div>
         <ul class="nav">
 
-            <li class="nav-item ">
-                <a class="nav-link" href="#">
+            <li class="nav-item">
+                <a class="nav-link" href="<?php echo $config::BASEURL . "menus/dashboard.php"; ?>">
                     <i class="material-icons">dashboard</i>
                     <p> Dashboard </p>
                 </a>
             </li>
-            
-             <li class="nav-item ">
-                <a class="nav-link" href="<?php echo $config::BASEURL."menus/category.php?type=index"; ?>">
+
+            <li class="nav-item">
+                <a class="nav-link" href="<?php echo $config::BASEURL . "menus/category.php?type=index"; ?>">
                     <i class="material-icons">category</i>
                     <p> Category </p>
                 </a>
             </li>
-            
-            <li class="nav-item ">
-                <a class="nav-link" href="<?php echo $config::BASEURL."menus/product.php"; ?>">
+
+            <li class="nav-item">
+                <a class="nav-link" href="<?php echo $config::BASEURL . "menus/product.php"; ?>">
                     <i class="material-icons">shopping_basket</i>
                     <p> Product </p>
                 </a>
             </li>
+            
+            <li class="nav-item">
+                <a class="nav-link" href="<?php echo $config::BASEURL . "menus/receiving.php"; ?>">
+                    <i class="material-icons">receipt</i>
+                    <p> Receiving </p>
+                </a>
+            </li>
 
-            <li class="nav-item  ">
-                <a class="nav-link" href="<?php echo $config::BASEURL."menus/logout.php"; ?>">
+            <li class="nav-item">
+                <a class="nav-link" href="<?php echo $config::BASEURL . "menus/logout.php"; ?>">
                     <i class="material-icons">lock</i>
                     <p> Logout </p>
                 </a>

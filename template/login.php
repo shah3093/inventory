@@ -6,7 +6,7 @@ $config = new Config();
 
 $sessionInstance = Session::getInstance();
 if (isset($sessionInstance->adminName)) {
-    $url = $config::BASEURL . 'template/index.php';
+    $url = $config::BASEURL . 'menus/dashboard.php';
     header("Location: $url");
     die();
 }

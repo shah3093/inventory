@@ -199,7 +199,6 @@
                     <div class="form-group bmd-form-group">
                         <textarea name="formdata[note]"  class="form-control" id="description"></textarea>
                     </div>
-
                 </div>
             </div>
         </div>
