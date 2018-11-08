@@ -80,6 +80,13 @@
                     <p> Receiving </p>
                 </a>
             </li>
+            
+            <li class="nav-item">
+                <a class="nav-link" href="<?php echo $config::BASEURL . "menus/customer.php"; ?>">
+                    <i class="material-icons">contacts</i>
+                    <p> Customer </p>
+                </a>
+            </li>
 
             <li class="nav-item">
                 <a class="nav-link" href="<?php echo $config::BASEURL . "menus/logout.php"; ?>">
