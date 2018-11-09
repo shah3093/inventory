@@ -7,6 +7,7 @@ $categoryController = new CategoryController();
 $pageTitle = "Category";
 
 $type = $fromhlper->clean_data(isset($_GET['type']) ? $_GET['type'] : "index");
+$categories = categories();
 
 if ($type == "index") {
     $categoryController->index();

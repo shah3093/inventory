@@ -1,5 +1,17 @@
 $(document).ready(function () {
 
+
+    $('#datatables thead #parent').html('<input id="parentSearch" type="text" placeholder="Parent" />');
+
+    // Apply the search
+    $('#datatables thead #parent').on('keyup', function () {
+        var searchval = $("#parentSearch").val();
+        table
+                .columns(2)
+                .search(searchval)
+                .draw();
+    });
+
     $(".remove").on("click", function () {
         var url = $(this).attr("data-href");
         swal({

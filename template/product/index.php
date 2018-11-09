@@ -18,7 +18,7 @@ if (!$database->connect()) {
                             <div class="card-icon">
                                 <i class="material-icons">assignment</i>
                             </div>
-                            <h4 class="card-title">Categories</h4>
+                            <h4 class="card-title">Product</h4>
                         </div>
                         <div class="col-md-6">
                             <a href="<?php echo $config::BASEURL . "menus/product.php?type=addProduct"; ?>" class="btn btn-info float-right">

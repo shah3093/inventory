@@ -2,7 +2,7 @@
 if (!$database->connect()) {
     echo $database->errormsg;
 } else {
-    $stmt = $database->connection->prepare("SELECT * FROM category ORDER BY id DESC");
+    $stmt = $database->connection->prepare("SELECT * FROM supplier");
     $stmt->execute();
     $results = $stmt->fetchAll();
     ?>
@@ -18,14 +18,14 @@ if (!$database->connect()) {
                             <div class="card-icon">
                                 <i class="material-icons">assignment</i>
                             </div>
-                            <h4 class="card-title">Categories</h4>
+                            <h4 class="card-title">Supplier</h4>
                         </div>
                         <div class="col-md-6">
-                            <a href="<?php echo $config::BASEURL . "menus/category.php?type=addCategory"; ?>" class="btn btn-info float-right">
+                            <a href="<?php echo $config::BASEURL . "menus/supplier.php?type=addSupplier"; ?>" class="btn btn-info float-right">
                                 <span class="btn-label">
                                     <i class="material-icons">add</i>
                                 </span>
-                                Add category
+                                Add supplier
                                 <div class="ripple-container"></div></a>
                         </div>
                     </div>
@@ -39,57 +39,48 @@ if (!$database->connect()) {
                         <div id="datatables_wrapper" class="dataTables_wrapper dt-bootstrap4">
                             <div class="row">
                                 <div class="col-sm-12">
-                                    <script>
-                                    targets = [2,4];
-                                    </script>
                                     <table id="datatables" class="table table-striped table-no-bordered table-hover dataTable dtr-inline" style="width: 100%;" role="grid" aria-describedby="datatables_info" width="100%" cellspacing="0">
                                         <thead>
                                             <tr>
-                                                <th>#</th>
                                                 <th >Name</th>
-                                                <th id="parent">Parent</th>
-                                                <th rowspan="1" colspan="1">Description</th>
+                                                <th rowspan="1" colspan="1">Email</th>
                                                 <th class="text-right" >Actions</th>
                                             </tr>
                                         </thead>
                                         <tfoot>
                                             <tr>
-                                                <th>#</th>
                                                 <th>Name</th>
-                                                <th>Parent</th>
-                                                <th rowspan="1" colspan="1">Description</th>
+                                                <th rowspan="1" colspan="1">Email</th>
                                                 <th class="text-right" >Actions</th>
                                             </tr>
                                         </tfoot>
                                         <tbody>
-                                            <?php $i=1; foreach ($results as $result): ?>
+                                            <?php foreach ($results as $result): ?>
                                                 <tr role="row">
-                                                    <td><?php echo $i++; ?></td>
-                                                    <td><?php echo $result['name']; ?></td>
-                                                    <td><?php echo categoryInfo($result['parent']); ?></td>
-                                                    <td><?php echo $result['description']; ?></td>
+                                                    <td><?php echo $result['shop_name']; ?></td>
+                                                    <td><?php echo $result['email']; ?></td>
                                                     <td class="text-right">
                                                         <?php
                                                         $passData = array(
                                                             'id' => $result['id'],
-                                                            'type' => 'editCategory'
+                                                            'type' => 'editSupplier'
                                                         );
                                                         $passData = http_build_query($passData);
                                                         ?>
                                                         <a
-                                                            href="<?php echo $config::BASEURL . "menus/category.php?" . $passData; ?>"
+                                                            href="<?php echo $config::BASEURL . "menus/supplier.php?" . $passData; ?>"
                                                             class="btn btn-link btn-warning btn-just-icon edit">
                                                             <i class="material-icons">edit</i>
                                                         </a>
                                                         <?php
                                                         $passData = array(
                                                             'id' => $result['id'],
-                                                            'type' => 'deleteCategory'
+                                                            'type' => 'deleteSupplier'
                                                         );
                                                         $passData = http_build_query($passData);
                                                         ?>
                                                         <a 
-                                                            data-href="<?php echo $config::BASEURL . "menus/category.php?" . $passData; ?>" 
+                                                            data-href="<?php echo $config::BASEURL . "menus/supplier.php?" . $passData; ?>" 
                                                             class="btn btn-link btn-danger btn-just-icon remove">
                                                             <i class="material-icons">delete</i>
                                                         </a>

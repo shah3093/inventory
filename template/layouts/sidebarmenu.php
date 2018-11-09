@@ -59,6 +59,13 @@
                     <p> Dashboard </p>
                 </a>
             </li>
+            
+             <li class="nav-item">
+                <a class="nav-link" href="<?php echo $config::BASEURL . "menus/sellout.php"; ?>">
+                    <i class="material-icons">shopping_cart</i>
+                    <p> Sell out </p>
+                </a>
+            </li>
 
             <li class="nav-item">
                 <a class="nav-link" href="<?php echo $config::BASEURL . "menus/category.php?type=index"; ?>">
@@ -83,10 +90,19 @@
             
             <li class="nav-item">
                 <a class="nav-link" href="<?php echo $config::BASEURL . "menus/customer.php"; ?>">
-                    <i class="material-icons">contacts</i>
+                    <i class="material-icons">supervisor_account</i>
                     <p> Customer </p>
                 </a>
             </li>
+            
+            <li class="nav-item">
+                <a class="nav-link" href="<?php echo $config::BASEURL . "menus/supplier.php"; ?>">
+                    <i class="material-icons">business</i>
+                    <p> Supplier </p>
+                </a>
+            </li>
+            
+           
 
             <li class="nav-item">
                 <a class="nav-link" href="<?php echo $config::BASEURL . "menus/logout.php"; ?>">

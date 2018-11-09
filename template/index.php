@@ -31,10 +31,12 @@ if (!isset($sessionInstance->adminName)) {
         <script src="../assets/js/core/jquery.min.js" type="text/javascript"></script>
         <script>
             var baseurl = "<?php echo $config::BASEURL; ?>";
+            var targets = Number(0);
+            var table;
         </script>
     </head>
 
-    <body class="">
+    <body class="<?php echo isset($bodyClass)?$bodyClass:""; ?>">
 
         <div class="wrapper ">
 

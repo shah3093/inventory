@@ -1,12 +1,15 @@
 $(document).ready(function () {
 
-    $('#datatables').DataTable({
+    table = $('#datatables').DataTable({
         "pagingType": "full_numbers",
         "lengthMenu": [
             [10, 25, 50, -1],
             [10, 25, 50, "All"]
         ],
         "order": [],
+        "columnDefs": [
+            {"orderable": false, "targets": targets}
+        ],
         responsive: true,
         language: {
             search: "_INPUT_",

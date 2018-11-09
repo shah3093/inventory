@@ -14,6 +14,16 @@
                             <?php echo $categoryName; ?>
                         </div>
                     <?php endif; ?>
+                    
+                    <select name="formdata[parent]" class="selectpicker form-control" data-size="<?php echo count($categories) + 2; ?>" data-style="btn btn-primary"  tabindex="-98">
+                        <option disabled="" selected="">Select category</option>
+                        <option value="">None</option>
+                        <?php foreach ($categories as $category): ?>
+                            <option value="<?php echo $category['id']; ?>"><?php echo $category['name']; ?></option>
+                        <?php endforeach; ?>
+                    </select>
+
+                    <br/><br/>
                     <div class="form-group bmd-form-group">
                         <label for="category" class="bmd-label-floating">Name *</label>
                         <input type="text" name="formdata[name]" required class="form-control" id="category">

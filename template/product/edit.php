@@ -13,10 +13,10 @@
                 </div>
                 <div class="card-body ">
                     <select name="formdata[category_id]" class="selectpicker form-control" data-size="<?php echo count($categories) + 2; ?>" data-style="btn btn-primary"  tabindex="-98">
-                        <option disabled="" selected="">Select category</option>
-                        <option value="">None</option>
+                        <option disabled=""Select category</option>
+                        <option <?php echo $product['category_id'] == null?"selected":""; ?> value="">None</option>
                         <?php foreach ($categories as $category): ?>
-                            <option value="<?php echo $category['id']; ?>"><?php echo $category['name']; ?></option>
+                            <option <?php echo $product['category_id'] == $category['id'] ?"selected":""; ?> value="<?php echo $category['id']; ?>"><?php echo $category['name']; ?></option>
                         <?php endforeach; ?>
                     </select>
 
