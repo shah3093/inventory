@@ -1,6 +1,7 @@
 <?php
 
 include_once '../controller/receivingController.php';
+include_once '../database/selectquery.php';
 
 $receivingController = new ReceivingController();
 
@@ -26,8 +27,8 @@ elseif ($type == "addReceiving") {
 else if($type == "editReceiving"){
     $recevingID = $fromhlper->clean_data(isset($_GET['id']) ? $_GET['id'] : NULL);
     if ($recevingID != NULL) {
-        $receive = recevingInfo($recevingID);
-        $products = productsInfo($recevingID);
+        $receive = select_singlerow("receiving", ["id"=>$recevingID]);
+        $products = select_rows("product", ["receving_id" => $recevingID]);
         $receivingController->editReceiving();
         $viewFile = $fromhlper->clean_data($receivingController->viewFile);
         $javaScriptFile = $fromhlper->clean_data($receivingController->javaScriptFile);

@@ -3,6 +3,7 @@
 include_once "../config/config.php";
 include_once '../library/fromhelper.php';
 include_once '../database/database.php';
+include_once '../database/selectquery.php';
 include_once '../library/sessionHandler.php';
 
 $fromhlper = new Fromhelper();
@@ -129,9 +130,9 @@ if ($_POST) {
 
 function deleteimg($type, $id) {
     if ($type != "receive") {
-        $product = productInfo($id);
+        $product = select_singlerow("product", ['id'=>$id]);
     } else {
-        $product = recevingInfo($id);
+        $product = select_singlerow("receiving", ['id'=>$id]);
     }
 
     if ($product['image'] != NULL) {
@@ -187,33 +188,7 @@ function sendfeedback($data) {
     die();
 }
 
-function recevingInfo($recevingid) {
-    $database = new Database();
-    if (!$database->connect()) {
-        echo $database->errormsg;
-        exit();
-    } else {
-        $stmt = $database->connection->prepare("SELECT * FROM receiving WHERE id =:id ");
-        $stmt->execute([
-            'id' => $recevingid
-        ]);
-        return $stmt->fetch();
-    }
-}
 
-function productsInfo($recevingid) {
-    $database = new Database();
-    if (!$database->connect()) {
-        echo $database->errormsg;
-        exit();
-    } else {
-        $stmt = $database->connection->prepare("SELECT * FROM product WHERE receving_id =:id ");
-        $stmt->execute([
-            'id' => $recevingid
-        ]);
-        return $stmt->fetchAll();
-    }
-}
 
 function deleteReceving($receiveID) {
     $database = new Database();
@@ -236,4 +211,8 @@ function deleteReceving($receiveID) {
             echo "Something wrong";
         }
     }
+}
+
+function suppliers() {
+    
 }

@@ -3,6 +3,7 @@
 include_once "../config/config.php";
 include_once '../library/fromhelper.php';
 include_once '../database/database.php';
+include_once '../database/selectquery.php';
 include_once '../library/sessionHandler.php';
 
 $fromhlper = new Fromhelper();
@@ -103,26 +104,4 @@ function sendfeedback($data) {
     die();
 }
 
-function categories() {
-    $database = new Database();
-    $database->connect();
-    $stmt = $database->connection->prepare("SELECT * FROM category ");
-    $stmt->execute();
-    $categories = $stmt->fetchAll();
-    return $categories;
-}
 
-function categoryInfo($catid) {
-    $database = new Database();
-    if (!$database->connect()) {
-        echo $database->errormsg;
-        exit();
-    } else {
-        $stmt = $database->connection->prepare("SELECT * FROM category WHERE id =:id ");
-        $stmt->execute([
-            'id' => $catid
-        ]);
-        $result =  $stmt->fetch();
-        return $result['name'];
-    }
-}

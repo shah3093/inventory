@@ -1,13 +1,4 @@
-<?php
-if (!$database->connect()) {
-    echo $database->errormsg;
-} else {
-    $stmt = $database->connection->prepare("SELECT * FROM category WHERE id =:id ");
-    $stmt->execute([
-        'id' => $categoryID
-    ]);
-    $result = $stmt->fetch();
-    ?>
+
     <div class="row">
         <div class="col-md-3"></div>
         <div class="col-md-6">
@@ -54,5 +45,3 @@ if (!$database->connect()) {
             </form>
         </div>
     </div>
-
-<?php } ?>

@@ -1,11 +1,4 @@
-<?php
-if (!$database->connect()) {
-    echo $database->errormsg;
-} else {
-    $stmt = $database->connection->prepare("SELECT * FROM category ORDER BY id DESC");
-    $stmt->execute();
-    $results = $stmt->fetchAll();
-    ?>
+
 
     <div class="row">
         <div class="col-md-1"></div>
@@ -66,7 +59,10 @@ if (!$database->connect()) {
                                                 <tr role="row">
                                                     <td><?php echo $i++; ?></td>
                                                     <td><?php echo $result['name']; ?></td>
-                                                    <td><?php echo categoryInfo($result['parent']); ?></td>
+                                                    <?php
+                                                    $par = select_singlerow("category", ['id'=>$result['parent']])
+                                                    ?>
+                                                    <td><?php echo $par['name']; ?></td>
                                                     <td><?php echo $result['description']; ?></td>
                                                     <td class="text-right">
                                                         <?php
@@ -110,7 +106,5 @@ if (!$database->connect()) {
         <!-- end col-md-12 -->
     </div>
 
-    <?php
-}
-?>
+
 
