@@ -1,7 +1,5 @@
 <?php
 $i = $_POST['count'];
-$size = $i+5;
-for ($i; $i < $size; $i++):
     ?>
     <div class="row">
         <div class="col-5">
@@ -13,7 +11,7 @@ for ($i; $i < $size; $i++):
         <div class="col-2">
             <div class="form-group bmd-form-group">
                 <label for="address" class="bmd-label-floating">Purchase price</label>
-                <input type="text" name="product[<?php echo $i; ?>][purchase_price]"  class="form-control " id="address">
+                <input type="text" name="product[<?php echo $i; ?>][purchase_price]"  class="purchaseprice form-control " id="address">
             </div>
         </div>
         <div class="col-2">
@@ -29,4 +27,3 @@ for ($i; $i < $size; $i++):
             </div>
         </div>
     </div>
-<?php endfor; ?>

@@ -14,7 +14,7 @@ $sessionInstance = Session::getInstance();
 Class ReceivingController {
 
     public $viewFile;
-    public $javaScriptFile = '../script/receiving.js';
+    public $javaScriptFile = ['../script/receiving.js', '../script/receivingCalculation.js'];
 
     public function index() {
         $this->viewFile = "../template/receiving/index.php";
@@ -39,13 +39,18 @@ if ($_POST) {
         } else {
             $_POST['formdata']['create_date'] = date('Y-m-d H:i:s');
 
-            $imagename = imageupload($_FILES['productimg']['name']);
-            $_POST['formdata']['image'] = $imagename;
+
+            if (isset($_POST['Supplier'])) {
+                $formdata = $_POST['formdata'];
+                $suplierid = $database->insert("supplier", $formdata);
+                $_POST['formdata']['supplier_id'] = $suplierid;
+            }
+
             $formdata = $_POST['formdata'];
-            $stmt = $database->insert("receiving", $formdata);
-            if ($stmt != "ERROR") {
+            $receiveid = $database->insert("receiving", $formdata);
+            if ($receiveid != "ERROR") {
                 foreach ($_POST['product'] as $product) {
-                    $product['receving_id'] = $stmt;
+                    $product['receving_id'] = $receiveid;
 
                     $tmpdata = trim($product['name']);
                     $tmpdata = stripcslashes($tmpdata);
@@ -53,6 +58,38 @@ if ($_POST) {
 
                     if ($tmpdata != null) {
                         $stmt2 = $database->insert("product", $product);
+                    }
+                }
+
+                foreach ($_POST['Payment'] as $key => $payment) {
+                    $payment['table_name'] = "receiving";
+                    $payment['table_id'] = $receiveid;
+                    $payment['total_price'] = $_POST['formdata']['totalprice'];
+
+                    if ($payment['pay'] != NULL) {
+                        $paymentid = $database->insert("payment", $payment);
+
+
+                        for ($i = 0; $i < count($_FILES['payment-' . $key]['name']); $i++) {
+                            $imagekeys = 'payment-' . $key;
+                            $imagename = imageupload($_FILES['payment-' . $key]['name'][$i],$i,$imagekeys);
+                            $asset['table_id'] = $paymentid;
+                            $asset['table_name'] = "payment";
+                            $asset['caption'] = $_POST['payment-' . $key . "-name"];
+                            $asset['file_name'] = $imagename;
+                            $asset['type'] = "IMAGE";
+                            $database->insert("assets", $asset);
+                        }
+
+//                        foreach ($_FILES['payment-' . $key] as $p => $tmpname) {
+//                            $imagename = imageupload($tmpname);
+//                            $asset['table_id'] = $paymentid;
+//                            $asset['table_name'] = "payment";
+//                            $asset['caption'] = $_POST['payment-' . $key . "-name"];
+//                            $asset['file_name'] = $imagename;
+//                            $asset['type'] = "IMAGE";
+//                            $database->insert("assets", $asset);
+//                        }
                     }
                 }
 
@@ -130,9 +167,9 @@ if ($_POST) {
 
 function deleteimg($type, $id) {
     if ($type != "receive") {
-        $product = select_singlerow("product", ['id'=>$id]);
+        $product = select_singlerow("product", ['id' => $id]);
     } else {
-        $product = select_singlerow("receiving", ['id'=>$id]);
+        $product = select_singlerow("receiving", ['id' => $id]);
     }
 
     if ($product['image'] != NULL) {
@@ -159,17 +196,17 @@ function productInfo($productID) {
     }
 }
 
-function imageupload($imagename) {
+function imageupload($imagename,$i,$imagekeys) {
     if ($imagename != null) {
         $target_dir = "../assets/uploads/";
-        $filename = "product-" . rand(10, 10000) . "-" . basename($imagename);
+        $filename = "payment-" . rand(10, 10000) . "-" . basename($imagename);
         $target_file = $target_dir . $filename;
         $imageFileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
         if ($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg" && $imageFileType != "gif") {
             echo "Sorry, only JPG, JPEG, PNG & GIF files are allowed.";
             exit();
         }
-        if (move_uploaded_file($_FILES["productimg"]["tmp_name"], $target_file)) {
+        if (move_uploaded_file($_FILES["$imagekeys"]["tmp_name"][$i], $target_file)) {
             return $filename;
         } else {
             echo "Sorry, there was an error uploading your file.";
@@ -187,8 +224,6 @@ function sendfeedback($data) {
     header("Location: $url");
     die();
 }
-
-
 
 function deleteReceving($receiveID) {
     $database = new Database();

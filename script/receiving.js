@@ -1,14 +1,62 @@
 $(document).ready(function () {
 
+    $("#supplierselectid").select2();
+
+    $("#supplierselectid").change(function () {
+        if ($(this).val() == "createnew") {
+            $.post(baseurl + "template/receiving/supplier.php", {}, function (result) {
+                $("#newsupplierdiv").html(result);
+                $("#selectrowsupplier").hide();
+                $("#deletesupplier").removeClass("d-none");
+            });
+        }
+    });
+    
+    $("#deletesupplier").on("click",function(e){
+        e.preventDefault();
+         $("#selectrowsupplier").show();
+         $("#deletesupplier").addClass("d-none");
+          $("#newsupplierdiv").empty();
+    });
+
+    // initialise Datetimepicker and Sliders
+    md.initFormExtendedDatetimepickers();
+    if ($('.slider').length != 0) {
+        md.initSliders();
+    }
+
     $("#add-product-field").on("click", function (event) {
         event.preventDefault();
         var count = Number($(this).attr("data-count"));
-        count += 5;
+        count += 1;
         $(this).attr("data-count", count);
         $.post(baseurl + "template/receiving/products.php", {count: count}, function (result) {
             $("#products-field").append(result);
         });
     });
+
+
+    $(".addpaymentimages").on("click", function (e) {
+        e.preventDefault();
+        var count = Number($(this).attr("data-count"));
+        var spanid = $(this).attr("data-spanid");
+        count += 1;
+        $(this).attr("data-count", count);
+        $.post(baseurl + "template/receiving/imagefield.php", {count: count}, function (result) {
+            $("#" + spanid).append(result);
+        });
+    });
+    
+     $("#addpaymentstep").on("click", function (e) {
+        e.preventDefault();
+        var count = Number($(this).attr("data-count"));
+        count += 1;
+        $(this).attr("data-count", count);
+        $.post(baseurl + "template/receiving/paymentstep.php", {count: count}, function (result) {
+            $("#paymentstep").append(result);
+        });
+    });
+
 
     $(".deleteproduct").on("click", function (event) {
         event.preventDefault();
@@ -37,9 +85,9 @@ $(document).ready(function () {
             }
         });
     });
-    
-    
-        $(".remove").on("click", function () {
+
+
+    $(".remove").on("click", function () {
         var url = $(this).attr("data-href");
         swal({
             title: 'Are you sure?',
@@ -61,4 +109,4 @@ $(document).ready(function () {
         });
     });
 
-})
+});

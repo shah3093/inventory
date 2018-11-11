@@ -56,6 +56,8 @@
 
         <!--  Notifications Plugin    -->
         <script src="../assets/js/plugins/bootstrap-notify.js"></script>
+        
+        <script src="../assets/js/plugins/select2/select2.min.js"></script>
 
         <!-- Control Center for Material Dashboard: parallax effects, scripts for the example pages etc -->
         <script src="../assets/js/material-dashboard.min.js" type="text/javascript"></script>

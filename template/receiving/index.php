@@ -57,7 +57,7 @@ if (!$database->connect()) {
                                         <tbody>
                                             <?php foreach ($results as $result): ?>
                                                 <tr role="row">
-                                                    <td><?php echo $result['suppliername']; ?></td>
+                                                    <td><?php echo $result['id']; ?></td>
                                                     <td><?php echo $result['note']; ?></td>
                                                     <td class="text-right">
                                                         <?php

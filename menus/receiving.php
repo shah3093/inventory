@@ -12,15 +12,16 @@ $type = $fromhlper->clean_data(isset($_GET['type']) ? $_GET['type'] : "index");
 if ($type == "index") {
     $receivingController->index();
     $viewFile = $fromhlper->clean_data($receivingController->viewFile);
-    $javaScriptFile = $fromhlper->clean_data($receivingController->javaScriptFile);
+    $javaScriptFile = $receivingController->javaScriptFile;
     include_once '../template/index.php';
 } 
 
 
 elseif ($type == "addReceiving") {
+    $suppliers = select_rows("supplier");
      $receivingController->addReceiving();
     $viewFile = $fromhlper->clean_data($receivingController->viewFile);
-    $javaScriptFile = $fromhlper->clean_data($receivingController->javaScriptFile);
+    $javaScriptFile = $receivingController->javaScriptFile;
     include_once '../template/index.php';
 }
 
@@ -31,12 +32,12 @@ else if($type == "editReceiving"){
         $products = select_rows("product", ["receving_id" => $recevingID]);
         $receivingController->editReceiving();
         $viewFile = $fromhlper->clean_data($receivingController->viewFile);
-        $javaScriptFile = $fromhlper->clean_data($receivingController->javaScriptFile);
+        $javaScriptFile = $receivingController->javaScriptFile;
         include_once '../template/index.php';
     } else {
         $receivingController->index();
         $viewFile = $fromhlper->clean_data($receivingController->viewFile);
-        $javaScriptFile = $fromhlper->clean_data($receivingController->javaScriptFile);
+        $javaScriptFile = $receivingController->javaScriptFile;
         include_once '../template/index.php';
     }
 }

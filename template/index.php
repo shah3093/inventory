@@ -27,6 +27,8 @@ if (!isset($sessionInstance->adminName)) {
         <!-- CSS Just for demo purpose, don't include it in your project -->
         <link href="../assets/demo/demo.css" rel="stylesheet" />
 
+        <link rel="stylesheet" href="../assets/js/plugins/select2/select2.min.css"/>
+
         <link href="../assets/css/customize.css" rel="stylesheet" />
         <script src="../assets/js/core/jquery.min.js" type="text/javascript"></script>
         <script>
@@ -36,7 +38,7 @@ if (!isset($sessionInstance->adminName)) {
         </script>
     </head>
 
-    <body class="<?php echo isset($bodyClass)?$bodyClass:""; ?>">
+    <body class="<?php echo isset($bodyClass) ? $bodyClass : ""; ?>">
 
         <div class="wrapper ">
 
@@ -70,10 +72,18 @@ if (!isset($sessionInstance->adminName)) {
 
         <?php include_once '../template/layouts/javaScriptsPlugin.php'; ?>
 
+
         <script>
 <?php
 include_once '../script/mainScript.js';
-include_once $javaScriptFile;
+
+if (!is_array($javaScriptFile)) {
+    include_once $javaScriptFile;
+} else {
+    foreach ($javaScriptFile as $file) {
+        include_once $file;
+    }
+}
 ?>
         </script>
 
