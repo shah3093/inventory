@@ -1,7 +1,7 @@
 <?php
 
 include_once '../controller/categoryController.php';
-include_once '../database/selectquery.php';
+include_once '../database/commonquery.php';
 
 $categoryController = new CategoryController();
 

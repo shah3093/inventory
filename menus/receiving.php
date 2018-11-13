@@ -1,7 +1,7 @@
 <?php
 
 include_once '../controller/receivingController.php';
-include_once '../database/selectquery.php';
+include_once '../database/commonquery.php';
 
 $receivingController = new ReceivingController();
 
@@ -28,17 +28,19 @@ elseif ($type == "addReceiving") {
 else if($type == "editReceiving"){
     $recevingID = $fromhlper->clean_data(isset($_GET['id']) ? $_GET['id'] : NULL);
     if ($recevingID != NULL) {
+         $suppliers = select_rows("supplier");
         $receive = select_singlerow("receiving", ["id"=>$recevingID]);
         $products = select_rows("product", ["receving_id" => $recevingID]);
+        $payments = select_rows("payment",  ["table_name" => "receiving","table_id"=>$receive['id']] );
         $receivingController->editReceiving();
         $viewFile = $fromhlper->clean_data($receivingController->viewFile);
         $javaScriptFile = $receivingController->javaScriptFile;
         include_once '../template/index.php';
     } else {
-        $receivingController->index();
-        $viewFile = $fromhlper->clean_data($receivingController->viewFile);
-        $javaScriptFile = $receivingController->javaScriptFile;
-        include_once '../template/index.php';
+         $receivingController->index();
+         $viewFile = $fromhlper->clean_data($receivingController->viewFile);
+         $javaScriptFile = $receivingController->javaScriptFile;
+         include_once '../template/index.php';
     }
 }
 

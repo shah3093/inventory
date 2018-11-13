@@ -3,8 +3,9 @@
 include_once "../config/config.php";
 include_once '../library/fromhelper.php';
 include_once '../database/database.php';
-include_once '../database/selectquery.php';
+include_once '../database/commonquery.php';
 include_once '../library/sessionHandler.php';
+include_once '../library/commontasks.php';
 
 $fromhlper = new Fromhelper();
 $database = new Database();
@@ -39,17 +40,20 @@ if ($_POST) {
         } else {
             $_POST['formdata']['create_date'] = date('Y-m-d H:i:s');
 
-
             if (isset($_POST['Supplier'])) {
-                $formdata = $_POST['formdata'];
+                $_POST['Supplier']['create_date'] = date('Y-m-d H:i:s');
+                $formdata = $_POST['Supplier'];
                 $suplierid = $database->insert("supplier", $formdata);
                 $_POST['formdata']['supplier_id'] = $suplierid;
             }
 
             $formdata = $_POST['formdata'];
             $receiveid = $database->insert("receiving", $formdata);
+
             if ($receiveid != "ERROR") {
+
                 foreach ($_POST['product'] as $product) {
+                    $product['create_date'] = date('Y-m-d H:i:s');
                     $product['receving_id'] = $receiveid;
 
                     $tmpdata = trim($product['name']);
@@ -62,6 +66,7 @@ if ($_POST) {
                 }
 
                 foreach ($_POST['Payment'] as $key => $payment) {
+                    $payment['create_date'] = date('Y-m-d H:i:s');
                     $payment['table_name'] = "receiving";
                     $payment['table_id'] = $receiveid;
                     $payment['total_price'] = $_POST['formdata']['totalprice'];
@@ -69,27 +74,20 @@ if ($_POST) {
                     if ($payment['pay'] != NULL) {
                         $paymentid = $database->insert("payment", $payment);
 
-
-                        for ($i = 0; $i < count($_FILES['payment-' . $key]['name']); $i++) {
-                            $imagekeys = 'payment-' . $key;
-                            $imagename = imageupload($_FILES['payment-' . $key]['name'][$i],$i,$imagekeys);
-                            $asset['table_id'] = $paymentid;
-                            $asset['table_name'] = "payment";
-                            $asset['caption'] = $_POST['payment-' . $key . "-name"];
-                            $asset['file_name'] = $imagename;
-                            $asset['type'] = "IMAGE";
-                            $database->insert("assets", $asset);
+                        if (isset($_FILES['payment-' . $key]['name'])) {
+                            if ($_FILES['payment-' . $key]['name'][$i] != NULL) {
+                                for ($i = 0; $i < count($_FILES['payment-' . $key]['name']); $i++) {
+                                    $imagekeys = 'payment-' . $key;
+                                    $imagename = imageupload($_FILES['payment-' . $key]['name'][$i], $i, $imagekeys);
+                                    $asset['table_id'] = $paymentid;
+                                    $asset['table_name'] = "payment";
+                                    $asset['caption'] = $_POST['payment-' . $key . "-name"];
+                                    $asset['file_name'] = $imagename;
+                                    $asset['type'] = "IMAGE";
+                                    $database->insert("assets", $asset);
+                                }
+                            }
                         }
-
-//                        foreach ($_FILES['payment-' . $key] as $p => $tmpname) {
-//                            $imagename = imageupload($tmpname);
-//                            $asset['table_id'] = $paymentid;
-//                            $asset['table_name'] = "payment";
-//                            $asset['caption'] = $_POST['payment-' . $key . "-name"];
-//                            $asset['file_name'] = $imagename;
-//                            $asset['type'] = "IMAGE";
-//                            $database->insert("assets", $asset);
-//                        }
                     }
                 }
 
@@ -101,34 +99,17 @@ if ($_POST) {
                 echo "Something wrong";
             }
         }
-    } else if ($typeofform == "deletesingleproduct") {
-        $database = new Database();
-        if (!$database->connect()) {
-            echo $database->errormsg;
-        } else {
-            $productID = $_POST['productid'];
-            deleteimg("product", $productID);
-            $stmt = $database->delete("product", $productID);
-            if ($stmt == "DONE") {
-                $data = array(
-                    'type' => 'index'
-                );
-                echo "DONE";
-            } else {
-                echo "ERROR";
-            }
-        }
     } else if ($typeofform == "editForm") {
         if (!$database->connect()) {
             echo $database->errormsg;
         } else {
             $receiveid = $_POST['receiveid'];
             $_POST['formdata']['updtae_date'] = date('Y-m-d H:i:s');
-            $img = $_FILES['productimg']['name'];
-            if ($img != null) {
-                deleteimg("receive", $receiveid);
-                $imagename = imageupload($_FILES['productimg']['name']);
-                $_POST['formdata']['image'] = $imagename;
+            if (isset($_POST['Supplier'])) {
+                $_POST['Supplier']['create_date'] = date('Y-m-d H:i:s');
+                $formdata = $_POST['Supplier'];
+                $suplierid = $database->insert("supplier", $formdata);
+                $_POST['formdata']['supplier_id'] = $suplierid;
             }
 
             $formdata = $_POST['formdata'];
@@ -139,6 +120,7 @@ if ($_POST) {
                     $tmpdata = trim($product['name']);
                     $tmpdata = stripcslashes($tmpdata);
                     $tmpdata = htmlspecialchars($tmpdata);
+                    $product['updtae_date'] = date('Y-m-d H:i:s');
 
                     if (isset($product['id'])) {
                         $productID = $product['id'];
@@ -149,6 +131,37 @@ if ($_POST) {
                         $product['receving_id'] = $receiveid;
                         if ($tmpdata != null) {
                             $stmt2 = $database->insert("product", $product);
+                        }
+                    }
+                }
+
+                foreach ($_POST['Payment'] as $key => $payment) {
+                    $payment['table_name'] = "receiving";
+                    $payment['table_id'] = $receiveid;
+                    $payment['total_price'] = $_POST['formdata']['totalprice'];
+
+
+                    if ($payment['pay'] != NULL) {
+                        if (!isset($product['id'])) {
+                            $payment['create_date'] = date('Y-m-d H:i:s');
+                            $paymentid = $database->insert("payment", $payment);
+                        } else {
+                            $payment['updtae_date'] = date('Y-m-d H:i:s');
+                            $database->update("payment", $payment, $payment['id']);
+                            $paymentid = $payment['id'];
+                        }
+
+                        for ($i = 0; $i < count($_FILES['payment-' . $key]['name']); $i++) {
+                            if ($_FILES['payment-' . $key]['name'][$i] != NULL) {
+                                $imagekeys = 'payment-' . $key;
+                                $imagename = imageupload($_FILES['payment-' . $key]['name'][$i], $i, $imagekeys);
+                                $asset['table_id'] = $paymentid;
+                                $asset['table_name'] = "payment";
+                                $asset['caption'] = $_POST['payment-' . $key . "-name"];
+                                $asset['file_name'] = $imagename;
+                                $asset['type'] = "IMAGE";
+                                $database->insert("assets", $asset);
+                            }
                         }
                     }
                 }
@@ -182,21 +195,7 @@ function deleteimg($type, $id) {
     }
 }
 
-function productInfo($productID) {
-    $database = new Database();
-    if (!$database->connect()) {
-        echo $database->errormsg;
-        exit();
-    } else {
-        $stmt = $database->connection->prepare("SELECT * FROM product WHERE id =:id ");
-        $stmt->execute([
-            'id' => $productID
-        ]);
-        return $stmt->fetch();
-    }
-}
-
-function imageupload($imagename,$i,$imagekeys) {
+function imageupload($imagename, $i, $imagekeys) {
     if ($imagename != null) {
         $target_dir = "../assets/uploads/";
         $filename = "payment-" . rand(10, 10000) . "-" . basename($imagename);
@@ -230,13 +229,18 @@ function deleteReceving($receiveID) {
     if (!$database->connect()) {
         echo $database->errormsg;
     } else {
-        deleteimg("receive", $receiveID);
         $stmt = $database->delete("receiving", $receiveID);
-        $products = productsInfo($receiveID);
-        foreach ($products as $product) {
-            deleteimg("product", $product['id']);
-            $stmt = $database->delete("product", $product['id']);
+
+        $payments = select_rows('payment', ['table_name' => 'receiving', 'table_id' => $receiveID]);
+
+        foreach ($payments as $payment) {
+            $database->delete("payment", $payment['id']);
+            $assets = select_rows('assets', ['table_name' => 'payment', 'table_id' => $payment['id']]);
+            foreach ($assets as $asset) {
+                deleteasset($asset['id']);
+            }
         }
+
         if ($stmt == "DONE") {
             $data = array(
                 'type' => 'index'
@@ -246,8 +250,4 @@ function deleteReceving($receiveID) {
             echo "Something wrong";
         }
     }
-}
-
-function suppliers() {
-    
 }

@@ -25,7 +25,7 @@
                         <div class="col-4">
                             <div class="form-group bmd-form-group">
                                 <label for="suppliername" class="bmd-label-floating">Supplier</label>
-                                <select id="supplierselectid" name="formdata[supplier_id]" class="form-control" >
+                                <select id="supplierselectid" name="formdata[supplier_id]" class="form-control required" >
                                     <option disabled="" selected="">Select supplier</option>
                                     <option value="createnew">Create new</option>
                                     <?php foreach ($suppliers as $supplier): ?>
@@ -49,25 +49,25 @@
                             <div class="col-5">
                                 <div class="form-group bmd-form-group">
                                     <label for="suppliername" class="bmd-label-floating">Product name </label>
-                                    <input type="text" name="product[<?php echo $i; ?>][name]"  class="form-control " id="suppliername">
+                                    <input type="text" name="product[<?php echo $i; ?>][name]"  class="form-control " />
                                 </div>
                             </div>
                             <div class="col-2">
                                 <div class="form-group bmd-form-group">
                                     <label for="address" class="bmd-label-floating">Purchase price</label>
-                                    <input type="text" name="product[<?php echo $i; ?>][purchase_price]"  class="form-control purchaseprice" id="address">
+                                    <input type="text" name="product[<?php echo $i; ?>][purchase_price]"  class="form-control purchaseprice" />
                                 </div>
                             </div>
                             <div class="col-2">
                                 <div class="form-group bmd-form-group">
                                     <label for="address" class="bmd-label-floating">Stock</label>
-                                    <input type="text" name="product[<?php echo $i; ?>][stock]"  class="form-control " id="address">
+                                    <input type="text" name="product[<?php echo $i; ?>][stock]"  class="form-control stock" >
                                 </div>
                             </div>
                             <div class="col-2">
                                 <div class="form-group bmd-form-group">
                                     <label for="address" class="bmd-label-floating">Unit</label>
-                                    <input type="text" name="product[<?php echo $i; ?>][measurementunit]"  class="form-control " id="address">
+                                    <input type="text" name="product[<?php echo $i; ?>][measurementunit]"  class="form-control " />
                                 </div>
                             </div>
                         </div>
@@ -126,7 +126,7 @@
                             <div class="row ">
                                 <label class="col-sm-4 col-form-label">Total price</label>
                                 <div class="col-sm-8">
-                                    <input id="prchasetotalprice" value="0" type="text" name="formdata[totalprice]"  class="form-control " />
+                                    <input readonly id="prchasetotalprice" value="0" type="text" name="formdata[totalprice]" required class="required form-control " />
                                 </div>
                             </div>
                             <button id="calculateid" class="btn btn-success btn-sm float-right">Calculate</button>
@@ -144,15 +144,7 @@
                         <div class="col-7">
                             <div class="row" style="margin-left: 15px;">
                                 <input  type="file"  name="payment-0[]" multiple/>
-                                <input type="text"  class="form-control" name="payment-0-caption" placeholder="Caption"/>
-                            </div>
-                            <span id="paymentimages-0"></span>
-                            <button data-count="1" data-spanid="paymentimages-0" class="addpaymentimages btn btn-info btn-sm">
-                                <span class="btn-label">
-                                    <i class="material-icons">add</i>
-                                </span>
-                                image field
-                            </button>
+                             </div>
 
                             <div class="form-group bmd-form-group">
                                 <label for="address" class="bmd-label-floating">Note</label>
@@ -166,7 +158,7 @@
                             <div class="row ">
                                 <label class="col-sm-4 col-form-label">Pay</label>
                                 <div class="col-sm-8">
-                                    <input type="text" data-dueid="due-0" name="Payment[0][pay]"  class="purchasepay form-control " />
+                                    <input type="text" data-dueid="due-0" name="Payment[0][pay]"  class="required purchasepay form-control " />
                                 </div>
                             </div>
 

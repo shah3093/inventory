@@ -8,7 +8,7 @@
     <div class="col-4">
         <div class="form-group bmd-form-group">
             <label for="suppliername" class="bmd-label-floating">Address</label>
-            <input type="text" name="Supplier[address]" required  class="required form-control ">
+            <input type="text" name="Supplier[address]"   class=" form-control ">
         </div>
     </div>
     <div class="col-4">

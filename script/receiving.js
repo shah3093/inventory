@@ -8,15 +8,17 @@ $(document).ready(function () {
                 $("#newsupplierdiv").html(result);
                 $("#selectrowsupplier").hide();
                 $("#deletesupplier").removeClass("d-none");
+                $(this).removeClass("required");
             });
         }
     });
-    
-    $("#deletesupplier").on("click",function(e){
+
+    $("#deletesupplier").on("click", function (e) {
         e.preventDefault();
-         $("#selectrowsupplier").show();
-         $("#deletesupplier").addClass("d-none");
-          $("#newsupplierdiv").empty();
+        $("#selectrowsupplier").show();
+        $("#deletesupplier").addClass("d-none");
+        $("#newsupplierdiv").empty();
+        $("#supplierselectid").addClass("required");
     });
 
     // initialise Datetimepicker and Sliders
@@ -46,8 +48,8 @@ $(document).ready(function () {
             $("#" + spanid).append(result);
         });
     });
-    
-     $("#addpaymentstep").on("click", function (e) {
+
+    $("#addpaymentstep").on("click", function (e) {
         e.preventDefault();
         var count = Number($(this).attr("data-count"));
         count += 1;

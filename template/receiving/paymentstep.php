@@ -9,44 +9,35 @@ $i = $_POST['count'];
         <div class="row">
             <div class="col-7">
                 <div class="row" style="margin-left: 15px;">
-                    <input  type="file"  name="Image"/>
-                    <input type="text"  class="form-control" name="" placeholder="Caption"/>
+                    <input  type="file" multiple  name="payment-<?php echo $i - 1; ?>[]"/>
                 </div>
-                <span id="paymentimages-<?php echo $i; ?>"></span>
-                <button data-count="1" data-spanid="paymentimages-<?php echo $i; ?>" class="addpaymentimages btn btn-info btn-sm">
-                    <span class="btn-label">
-                        <i class="material-icons">add</i>
-                    </span>
-                    image field
-                </button>
 
                 <div class="form-group bmd-form-group">
                     <label for="address" class="bmd-label-floating">Note</label>
-                    <textarea class="form-control" name="Payment[<?php echo $i-1; ?>][note]"></textarea>
-                       <input type="hidden" name="Payment[<?php echo $i-1; ?>][serial_number]" value="<?php echo $i-1; ?>"/>
+                    <textarea class="form-control" name="Payment[<?php echo $i - 1; ?>][note]"></textarea>
+                    <input type="hidden" name="Payment[<?php echo $i; ?>][serial_number]" value="<?php echo $i; ?>"/>
                 </div>
 
             </div>
             <div class="col-5">
-
                 <div class="row ">
                     <label class="col-sm-4 col-form-label">Pay</label>
                     <div class="col-sm-8">
-                        <input type="text" data-dueprevid="due-<?php echo $i - 2; ?>" data-dueid="due-<?php echo $i - 1; ?>" name="Payment[<?php echo $i-1; ?>][pay]"  class="purchasepay form-control " />
+                        <input type="text" data-dueprevid="due-<?php echo $i - 2; ?>" data-dueid="due-<?php echo $i - 1; ?>" name="Payment[<?php echo $i - 1; ?>][pay]"  class="required purchasepay form-control " />
                     </div>
                 </div>
 
                 <div class="row ">
                     <label class="col-sm-4 col-form-label">Due</label>
                     <div class="col-sm-8">
-                        <input id="due-<?php echo $i - 1; ?>" type="text" name="Payment[<?php echo $i-1; ?>][due]"  class="form-control " />
+                        <input id="due-<?php echo $i - 1; ?>" type="text" name="Payment[<?php echo $i - 1; ?>][due]"  class="form-control " />
                     </div>
                 </div>
 
                 <div class="row ">
                     <label class="col-sm-4 col-form-label">Payment type</label>
                     <div class="col-sm-8">
-                        <select name="Payment[<?php echo $i-1; ?>][payment_type]" class="form-control" >
+                        <select name="Payment[<?php echo $i - 1; ?>][payment_type]" class="form-control" >
                             <option value="CASH">Cash</option>
                             <option value="CHEQUE">Cheque</option>
                             <option value="CASH + CHEQUE">Cash + Cheque</option>
@@ -59,7 +50,7 @@ $i = $_POST['count'];
                 <div class="row ">
                     <label class="col-sm-4 col-form-label">Paid date</label>
                     <div class="col-sm-8">
-                        <input type="text" class="form-control datepicker"  name="Payment[<?php echo $i-1; ?>][pay_date]" placeholder="select date" />
+                        <input type="text" class="form-control datepicker"  name="Payment[<?php echo $i - 1; ?>][pay_date]" placeholder="select date" />
                     </div>
                 </div>
 

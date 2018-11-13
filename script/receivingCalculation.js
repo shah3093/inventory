@@ -8,7 +8,30 @@ $(document).ready(function () {
 
 
     $(".purchaseprice").on("blur", function () {
-        getPurchaseprice();
+        var data = $(this).val();
+        if (data.length > 0) {
+            if ($.isNumeric(data)) {
+                getPurchaseprice();
+                $(this).parent().removeClass("has-danger");
+            } else {
+                $(this).val(null);
+                $(this).parent().addClass("has-danger");
+                swal('Purchase  price is not a valid number');
+            }
+        }
+    });
+
+    $(".stock").on("blur", function () {
+        var data = $(this).val();
+        if (data.length > 0) {
+            if ($.isNumeric(data)) {
+                $(this).parent().removeClass("has-danger");
+            } else {
+                $(this).val(null);
+                $(this).parent().addClass("has-danger");
+                swal('Stock is not a valid number');
+            }
+        }
     });
 
     $("#purchase-others").on("blur", function () {
@@ -67,11 +90,16 @@ $(document).ready(function () {
 
 
     function getPurchaseprice() {
+        purchase_vat = getValueFromInput("#prchasevat");
+        purchase_vat_persent = getValueFromInput("#prchasevat");
+        purchaseothers = getValueFromInput("#purchase-others");
         purchaseprice = 0;
         $(".purchaseprice").each(function () {
             var tmpval = $(this).val();
             if (tmpval.length > 0) {
                 purchaseprice += Number(tmpval);
+            } else {
+                purchaseprice += Number(0);
             }
         });
         purchaseTotalPrice();
@@ -86,7 +114,6 @@ $(document).ready(function () {
         } else {
             return Number(0);
         }
-        purchaseTotalPrice();
     }
 
     function purchaseTotalPrice() {
@@ -111,8 +138,14 @@ $(document).ready(function () {
         var tmpval = Number($(this).val());
         if ($(this).attr("data-dueprevid")) {
             var dueprevid = $(this).attr("data-dueprevid");
-            var prevdue = Number($("#" + dueprevid).val());
-            var cal = prevdue - tmpval;
+            if ($("#" + dueprevid).val()) {
+                var prevdue = Number($("#" + dueprevid).val());
+                var cal = prevdue - tmpval;
+            } else {
+                var totalprice = Number($("#prchasetotalprice").val());
+                var cal = totalprice - tmpval;
+            }
+
             $("#" + dueid).val(cal);
         } else {
             var totalprice = Number($("#prchasetotalprice").val());
@@ -131,8 +164,13 @@ $(document).ready(function () {
             var tmpval = Number($(this).val());
             if ($(this).attr("data-dueprevid")) {
                 var dueprevid = $(this).attr("data-dueprevid");
-                var prevdue = Number($("#" + dueprevid).val());
-                var cal = prevdue - tmpval;
+                if ($("#" + dueprevid).val()) {
+                    var prevdue = Number($("#" + dueprevid).val());
+                    var cal = prevdue - tmpval;
+                } else {
+                    var totalprice = Number($("#prchasetotalprice").val());
+                    var cal = totalprice - tmpval;
+                }
                 $("#" + dueid).val(cal);
             } else {
                 var totalprice = Number($("#prchasetotalprice").val());

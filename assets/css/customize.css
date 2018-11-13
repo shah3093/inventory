@@ -9,3 +9,9 @@ input,h1,h2,h3,h4,h5,h6,label,td,th,option{
 .fileinput .thumbnail > img{
     max-height: 100px !important;
 }
+
+.paymnetimag{
+    height: 100px !important;
+    width: 100px !important;
+    margin-right: 15px !important;
+}

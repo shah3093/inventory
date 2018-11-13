@@ -17,7 +17,7 @@ $i = $_POST['count'];
         <div class="col-2">
             <div class="form-group bmd-form-group">
                 <label for="address" class="bmd-label-floating">Stock</label>
-                <input type="text" name="product[<?php echo $i; ?>][stock]"  class="form-control " id="address">
+                <input type="text" name="product[<?php echo $i; ?>][stock]"  class="form-control stock" />
             </div>
         </div>
         <div class="col-2">
